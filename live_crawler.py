@@ -1,6 +1,6 @@
 import requests
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import os
 from dotenv import load_dotenv
 
@@ -8,6 +8,8 @@ load_dotenv()
 
 BASE_URL = 'http://openapi.seoul.go.kr:8088'
 API_KEY = os.getenv('SEOUL_API_KEY')
+
+KST = timezone(timedelta(hours=9))
 
 def fetch_area_data(area_nm):
     url = f"{BASE_URL}/{API_KEY}/xml/citydata/1/5/{area_nm}"
@@ -22,7 +24,7 @@ def fetch_area_data(area_nm):
 
     area_cd = citydata.findtext('AREA_CD')
     ppltn_time = live.findtext('PPLTN_TIME')
-    created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    created_at = datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S')
 
     live_data = {
         'area_cd': area_cd,
