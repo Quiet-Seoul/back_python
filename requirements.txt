@@ -3,5 +3,6 @@ pandas
 sqlalchemy
 pymysql
 python-dotenv
+pandas
 numpy
 prophet
